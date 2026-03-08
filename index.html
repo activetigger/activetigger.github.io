@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ActiveTigger — Collaborative Text Annotation for Computational Social Sciences</title>
+  <meta name="description" content="ActiveTigger is an open-source text annotation tool for computational social sciences, integrating active learning, BERT fine-tuning, and generative AI.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --orange: #ff6b35;
+      --orange-light: #f7931e;
+      --yellow: #ffd166;
+      --amber: #ff9f1c;
+      --rust: #e85d26;
+      --peach: #ffbe76;
+      --dark: #3d2c1e;
+      --gray: #fff8f0;
+      --text: #2b2d42;
+      --text-light: #555;
+      --max-width: 960px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { color: var(--orange); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Header */
+    header {
+      background: var(--dark);
+      color: #fff;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header .logo {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+    header .logo span { color: var(--orange); }
+    header nav a {
+      color: #ccc;
+      margin-left: 1.5rem;
+      font-size: 0.9rem;
+    }
+    header nav a:hover { color: #fff; text-decoration: none; }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, #ff6b35 0%, #f7931e 50%, #ffd166 100%);
+      color: #fff;
+      text-align: center;
+      padding: 5rem 2rem 4rem;
+    }
+    .hero h1 {
+      font-size: 2.6rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .hero h1 span { color: var(--dark); }
+    .hero p {
+      max-width: 640px;
+      margin: 0 auto 2rem;
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.85);
+    }
+    .hero .buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.7rem 1.6rem;
+      border-radius: 25px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: opacity 0.2s;
+    }
+    .btn:hover { text-decoration: none; opacity: 0.9; transform: translateY(-1px); }
+    .btn-primary { background: var(--orange); color: #fff; }
+    .btn-secondary { background: var(--teal); color: #fff; }
+    .btn-outline { border: 1.5px solid #fff; color: #fff; }
+
+    /* Sections */
+    section { padding: 4rem 2rem; }
+    .container { max-width: var(--max-width); margin: 0 auto; }
+    section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+    section h2 span { color: var(--orange); }
+    section .subtitle {
+      color: var(--text-light);
+      margin-bottom: 2.5rem;
+      font-size: 1.05rem;
+    }
+
+    /* Features */
+    .features { background: var(--gray); }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .feature-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 1.8rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      border-top: 3px solid var(--orange);
+      transition: transform 0.2s;
+    }
+    .feature-card:nth-child(2) { border-top-color: var(--amber); }
+    .feature-card:nth-child(3) { border-top-color: var(--yellow); }
+    .feature-card:nth-child(4) { border-top-color: var(--rust); }
+    .feature-card:nth-child(5) { border-top-color: var(--peach); }
+    .feature-card:nth-child(6) { border-top-color: var(--amber); }
+    .feature-card:hover { transform: translateY(-3px); }
+    .feature-card .icon {
+      font-size: 2rem;
+      margin-bottom: 0.6rem;
+    }
+    .feature-card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 0.4rem;
+    }
+    .feature-card p {
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+
+    /* Philosophy */
+    .philosophy-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.2rem;
+    }
+    .philosophy-list li {
+      padding: 1.2rem 1.4rem;
+      background: var(--gray);
+      border-radius: 12px;
+      border-left: 4px solid var(--orange);
+      font-size: 0.95rem;
+    }
+    .philosophy-list li:nth-child(2) { border-left-color: var(--amber); }
+    .philosophy-list li:nth-child(3) { border-left-color: var(--yellow); }
+
+    /* Repos */
+    .repos { background: var(--gray); }
+    .repos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.2rem;
+    }
+    .repo-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s;
+    }
+    .repo-card:hover { transform: translateY(-3px); }
+    .repo-card h3 {
+      font-size: 1rem;
+      margin-bottom: 0.3rem;
+    }
+    .repo-card h3 a { color: var(--text); }
+    .repo-card h3 a:hover { color: var(--orange); }
+    .repo-card .lang {
+      font-size: 0.8rem;
+      color: var(--orange);
+      margin-bottom: 0.4rem;
+      font-weight: 600;
+    }
+    .repo-card p {
+      font-size: 0.88rem;
+      color: var(--text-light);
+      flex: 1;
+    }
+
+    /* Team */
+    .team-info p {
+      max-width: 700px;
+      font-size: 0.95rem;
+      color: var(--text-light);
+      margin-bottom: 0.8rem;
+    }
+
+    /* Contact */
+    .contact { background: var(--gray); text-align: center; }
+    .contact .btn { margin-top: 1rem; }
+
+    /* Footer */
+    footer {
+      background: var(--dark);
+      color: #aaa;
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.85rem;
+    }
+    footer a { color: var(--orange-light); }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 1.8rem; }
+      header { flex-direction: column; gap: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Active<span>Tigger</span></div>
+  <nav>
+    <a href="#features">Features</a>
+    <a href="#repositories">Repositories</a>
+    <a href="#team">Team</a>
+    <a href="https://activetigger.github.io/documentation/" target="_blank">Documentation</a>
+    <a href="https://github.com/activetigger" target="_blank">GitHub</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Active<span>Tigger</span></h1>
+  <p>An open-source text annotation tool for computational social sciences, integrating active learning, BERT fine-tuning, and generative AI.</p>
+  <div class="buttons">
+    <a class="btn btn-primary" href="https://activetigger.github.io/documentation/" target="_blank">Get Started</a>
+    <a class="btn btn-outline" href="https://github.com/activetigger/activetigger" target="_blank">View on GitHub</a>
+  </div>
+</section>
+
+<section class="features" id="features">
+  <div class="container">
+    <h2>Key <span>Features</span></h2>
+    <p class="subtitle">Everything you need to annotate, explore, and classify textual data.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="icon">&#9997;</div>
+        <h3>Collaborative Annotation</h3>
+        <p>Collaboratively annotate text data with multiple users, stabilise codebooks, and manage annotation campaigns.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">&#9889;</div>
+        <h3>Active Learning</h3>
+        <p>Reduce annotation effort by letting the model suggest the most informative samples to label next.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">&#129302;</div>
+        <h3>BERT Fine-Tuning</h3>
+        <p>Fine-tune encoder classifiers directly from the interface to build high-performance text classifiers.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">&#128202;</div>
+        <h3>Topic Exploration</h3>
+        <p>Explore your corpus with BERTopic to discover themes and structure in your data.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">&#128172;</div>
+        <h3>Generative AI</h3>
+        <p>Leverage generative models via API calls to assist or automate annotation at scale.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">&#128200;</div>
+        <h3>Evaluation &amp; Export</h3>
+        <p>Evaluate classifier performance, compare annotators, and export results for further analysis.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="philosophy" id="philosophy">
+  <div class="container">
+    <h2>Our <span>Philosophy</span></h2>
+    <p class="subtitle">Guiding principles behind the project.</p>
+    <ul class="philosophy-list">
+      <li>Facilitate collaborative human/AI annotation and exploration of textual data.</li>
+      <li>Democratize access to computational social science tools for diverse communities.</li>
+      <li>Build a lightweight, frugal, and open-source application.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="repos" id="repositories">
+  <div class="container">
+    <h2><span>Repositories</span></h2>
+    <p class="subtitle">The ActiveTigger ecosystem on GitHub.</p>
+    <div class="repos-grid">
+      <div class="repo-card">
+        <h3><a href="https://github.com/activetigger/activetigger" target="_blank">activetigger</a></h3>
+        <div class="lang">TypeScript / Python</div>
+        <p>The main application — text annotation web tool dedicated to computational social sciences.</p>
+      </div>
+      <div class="repo-card">
+        <h3><a href="https://github.com/activetigger/at-cli-client" target="_blank">at-cli-client</a></h3>
+        <div class="lang">Python</div>
+        <p>Python wrapper to use the ActiveTigger API programmatically from scripts or notebooks.</p>
+      </div>
+      <div class="repo-card">
+        <h3><a href="https://github.com/activetigger/at-data" target="_blank">at-data</a></h3>
+        <div class="lang">Data</div>
+        <p>Sample datasets and data resources for use with ActiveTigger.</p>
+      </div>
+      <div class="repo-card">
+        <h3><a href="https://github.com/activetigger/documentation" target="_blank">documentation</a></h3>
+        <div class="lang">Docs</div>
+        <p>User and developer documentation — quickstart guides, tutorials, and reference.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="team" id="team">
+  <div class="container">
+    <h2>The <span>Team</span></h2>
+    <div class="team-info">
+      <p>ActiveTigger is developed in the <strong>CREST</strong> research unit (CNRS, Polytechnique, ENSAE), within the <a href="https://www.css.cnrs.fr/" target="_blank">CSS@IP-Paris</a> team, with the help of <a href="https://www.ouestware.com/" target="_blank">OuestWare</a>.</p>
+      <p>The current version is a refactor of the original <a href="https://gitlab.univ-lille.fr/julien.boelaert/activetigger" target="_blank">R Shiny ActiveTigger app</a> by Julien Boelaert &amp; Etienne Ollion. The name "Active Tigger" is a pun on the similarity between "Tagger" and "Tigger."</p>
+      <p>Generously funded by <strong>DRARI Île-de-France</strong>, <strong>Progedo</strong>, and <strong>CREST</strong>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="container">
+    <h2>Get in <span>Touch</span></h2>
+    <p class="subtitle">Questions, feedback, or want to request a research account? We'd love to hear from you.</p>
+    <a class="btn btn-primary" href="mailto:css@ensae.fr">css@ensae.fr</a>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2025 ActiveTigger &middot; <a href="https://github.com/activetigger">GitHub</a> &middot; <a href="https://activetigger.github.io/documentation/">Documentation</a> &middot; <a href="https://www.css.cnrs.fr/">CSS@IP-Paris</a></p>
+</footer>
+
+</body>
+</html>
