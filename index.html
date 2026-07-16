@@ -52,7 +52,7 @@
       color: var(--dark);
     }
     header .logo img { height: 30px; width: auto; }
-    header .logo span { color: var(--orange); }
+    header .logo .wordmark span { color: var(--orange); }
     header nav a {
       color: var(--text-light);
       text-decoration: none;
@@ -88,27 +88,70 @@
     .btn-outline { border: 1.5px solid var(--border); color: var(--dark); }
     .btn-outline:hover { border-color: var(--orange); color: var(--orange); }
 
-    /* Screenshots */
-    .tour { padding: 1rem 0 2rem; }
-    .tour figure { margin: 2.5rem 0; }
-    .tour img {
+    /* Screenshots slider */
+    .tour { padding: 1rem 0 2.5rem; }
+    .slides-window { overflow: hidden; }
+    .slides-track {
+      display: flex;
+      transition: transform 0.35s ease;
+    }
+    .slide {
+      flex: 0 0 100%;
+      min-width: 0;
+      margin: 0;
+      padding: 0 2px;
+    }
+    .slide img {
       width: 100%;
-      max-width: 100%;
+      height: clamp(240px, 52vw, 470px);
+      object-fit: contain;
+      object-position: top center;
       border: 1px solid var(--border);
       border-radius: 8px;
       box-shadow: 0 4px 14px rgba(0,0,0,0.07);
+      background: #fff;
     }
-    .tour h2 {
+    .slide h2 {
       font-size: 1.25rem;
       color: var(--dark);
       margin-bottom: 0.4rem;
     }
-    .tour figcaption {
+    .slide figcaption {
       margin-bottom: 1rem;
       max-width: 640px;
       color: var(--text-light);
       font-size: 0.97rem;
+      min-height: 4.2em;
     }
+    .slider-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.2rem;
+    }
+    .slider-arrow {
+      border: 1.5px solid var(--border);
+      background: #fff;
+      color: var(--dark);
+      border-radius: 50%;
+      width: 2.2rem;
+      height: 2.2rem;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .slider-arrow:hover { border-color: var(--orange); color: var(--orange); }
+    .slider-dots { display: flex; gap: 0.5rem; }
+    .slider-dot {
+      width: 0.65rem;
+      height: 0.65rem;
+      border-radius: 50%;
+      border: none;
+      background: var(--border);
+      cursor: pointer;
+      padding: 0;
+    }
+    .slider-dot.active { background: var(--orange); }
 
     /* Links */
     .links { background: var(--orange-soft); padding: 2.8rem 0; }
@@ -155,7 +198,7 @@
 
 <header>
   <div class="container">
-    <div class="logo"><img src="img/at.png" alt="ActiveTigger logo — a tiger head">Active<span>Tigger</span></div>
+    <div class="logo"><img src="img/at.png" alt="ActiveTigger logo — a tiger head"><span class="wordmark">Active<span>Tigger</span></span></div>
     <nav>
       <a href="https://activetigger.com/documentation/">Documentation</a>
       <a href="https://github.com/activetigger/activetigger">GitHub</a>
@@ -182,26 +225,104 @@
 <section class="tour">
   <div class="container">
 
-    <figure>
-      <h2>Start with a codebook</h2>
-      <figcaption>Everything begins with the codebook: define your annotation schemes and write down the guidelines for each category, so they stay consistent across annotators and over time.</figcaption>
-      <img src="img/codebook.png" alt="ActiveTigger codebook view with annotation guidelines and label counts" loading="lazy">
-    </figure>
+    <div class="slider" aria-roledescription="carousel" aria-label="Screenshots of ActiveTigger">
+      <div class="slides-window">
+        <div class="slides-track">
 
-    <figure>
-      <h2>Annotate</h2>
-      <figcaption>The annotation view: tag texts one by one, filter by content or by tag, and let active learning pick the next most informative example. Several annotators can work on the same project and compare their annotations.</figcaption>
-      <img src="img/annotation.png" alt="ActiveTigger annotation interface, with a text to tag and label buttons" loading="lazy">
-    </figure>
+          <figure class="slide">
+            <h2>Start with a codebook</h2>
+            <figcaption>Everything begins with the codebook: define your annotation schemes and write down the guidelines for each category, so they stay consistent across annotators and over time.</figcaption>
+            <img src="img/codebook.png" alt="ActiveTigger codebook view with annotation guidelines and label counts">
+          </figure>
 
-    <figure>
-      <h2>Explore your corpus</h2>
-      <figcaption>Visualise your corpus as a projection or run topic models to see how your annotations spread across the data before (and after) training a model.</figcaption>
-      <img src="img/projection.png" alt="ActiveTigger exploration view showing a 2D projection of the corpus colored by label" loading="lazy">
-    </figure>
+          <figure class="slide">
+            <h2>Annotate</h2>
+            <figcaption>The annotation view: tag texts one by one, filter by content or by tag, and let active learning pick the next most informative example. Several annotators can work on the same project and compare their annotations.</figcaption>
+            <img src="img/annotation.png" alt="ActiveTigger annotation interface, with a text to tag and label buttons">
+          </figure>
+
+          <figure class="slide">
+            <h2>Explore your corpus</h2>
+            <figcaption>Visualise your corpus as a projection or run topic models to see how your annotations spread across the data before (and after) training a model.</figcaption>
+            <img src="img/projection.png" alt="ActiveTigger exploration view showing a 2D projection of the corpus colored by label">
+          </figure>
+
+        </div>
+      </div>
+      <div class="slider-nav">
+        <button type="button" class="slider-arrow" data-dir="-1" aria-label="Previous screenshot">&#8592;</button>
+        <div class="slider-dots" role="tablist"></div>
+        <button type="button" class="slider-arrow" data-dir="1" aria-label="Next screenshot">&#8594;</button>
+      </div>
+    </div>
 
   </div>
 </section>
+
+<script>
+(function () {
+  var track = document.querySelector('.slides-track');
+  var slides = track.children;
+  var dotsBox = document.querySelector('.slider-dots');
+  var slider = document.querySelector('.slider');
+  var current = 0;
+  var timer = null;
+
+  function startAutoplay() {
+    stopAutoplay();
+    timer = setInterval(function () {
+      if (!document.hidden) go(current + 1);
+    }, 5000);
+  }
+  function stopAutoplay() {
+    if (timer) { clearInterval(timer); timer = null; }
+  }
+
+  for (var i = 0; i < slides.length; i++) {
+    var dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'slider-dot';
+    dot.setAttribute('aria-label', 'Go to screenshot ' + (i + 1));
+    dot.dataset.index = i;
+    dot.addEventListener('click', function () { go(parseInt(this.dataset.index, 10)); startAutoplay(); });
+    dotsBox.appendChild(dot);
+  }
+
+  function go(index) {
+    current = (index + slides.length) % slides.length;
+    track.style.transform = 'translateX(-' + current * 100 + '%)';
+    var dots = dotsBox.children;
+    for (var i = 0; i < dots.length; i++) {
+      dots[i].classList.toggle('active', i === current);
+    }
+  }
+
+  document.querySelectorAll('.slider-arrow').forEach(function (btn) {
+    btn.addEventListener('click', function () { go(current + parseInt(btn.dataset.dir, 10)); startAutoplay(); });
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft') { go(current - 1); startAutoplay(); }
+    if (e.key === 'ArrowRight') { go(current + 1); startAutoplay(); }
+  });
+
+  slider.addEventListener('mouseenter', stopAutoplay);
+  slider.addEventListener('mouseleave', startAutoplay);
+
+  var startX = null;
+  track.addEventListener('touchstart', function (e) { startX = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener('touchend', function (e) {
+    if (startX === null) return;
+    var dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 40) go(current + (dx < 0 ? 1 : -1));
+    startX = null;
+    startAutoplay();
+  }, { passive: true });
+
+  go(0);
+  startAutoplay();
+})();
+</script>
 
 <section class="links" id="access">
   <div class="container">
