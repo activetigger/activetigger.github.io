@@ -230,21 +230,33 @@
         <div class="slides-track">
 
           <figure class="slide">
-            <h2>Start with a codebook</h2>
-            <figcaption>Everything begins with the codebook: define your annotation schemes and write down the guidelines for each category, so they stay consistent across annotators and over time.</figcaption>
+            <h2>1. Explore your corpus</h2>
+            <figcaption>Get a first grasp of your data: browse the texts, search by keywords, visualise the corpus as a 2D projection or run topic models to see what it contains before deciding how to annotate it.</figcaption>
+            <img src="img/explore.png" alt="ActiveTigger exploration view of a corpus, with search and visualisation tools">
+          </figure>
+
+          <figure class="slide">
+            <h2>2. Write your codebook</h2>
+            <figcaption>Define your annotation schemes and write down the guidelines for each category, so they stay consistent across annotators and over time.</figcaption>
             <img src="img/codebook.png" alt="ActiveTigger codebook view with annotation guidelines and label counts">
           </figure>
 
           <figure class="slide">
-            <h2>Annotate</h2>
-            <figcaption>The annotation view: tag texts one by one, filter by content or by tag, and let active learning pick the next most informative example. Several annotators can work on the same project and compare their annotations.</figcaption>
+            <h2>3. Annotate</h2>
+            <figcaption>Tag texts one by one, filter by content or by tag, and let active learning pick the next most informative example. Several annotators can work on the same project and compare their annotations.</figcaption>
             <img src="img/annotation.png" alt="ActiveTigger annotation interface, with a text to tag and label buttons">
           </figure>
 
           <figure class="slide">
-            <h2>Explore your corpus</h2>
-            <figcaption>Visualise your corpus as a projection or run topic models to see how your annotations spread across the data before (and after) training a model.</figcaption>
-            <img src="img/projection.png" alt="ActiveTigger exploration view showing a 2D projection of the corpus colored by label">
+            <h2>4. Train &amp; predict</h2>
+            <figcaption>Fine-tune a BERT classifier on your annotations, check its performance, and apply it to the whole corpus to classify the texts you did not annotate by hand.</figcaption>
+            <img src="img/predict.png" alt="ActiveTigger prediction view, with a fine-tuned model applied to the corpus">
+          </figure>
+
+          <figure class="slide">
+            <h2>5. Export everything</h2>
+            <figcaption>Download your annotations, predictions, fine-tuned models and a full project summary in standard formats, ready for analysis in Python or R — or for sharing with your team.</figcaption>
+            <img src="img/export.png" alt="ActiveTigger export view listing downloadable annotations, predictions and models">
           </figure>
 
         </div>
