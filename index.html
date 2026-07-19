@@ -70,7 +70,6 @@
       line-height: 1.25;
     }
     .intro p {
-      max-width: 640px;
       margin-bottom: 1rem;
       font-size: 1.05rem;
     }
@@ -118,7 +117,6 @@
     }
     .slide figcaption {
       margin-bottom: 1rem;
-      max-width: 640px;
       color: var(--text-light);
       font-size: 0.97rem;
       min-height: 4.2em;
@@ -153,6 +151,33 @@
     }
     .slider-dot.active { background: var(--orange); }
 
+    /* Features */
+    .features { padding: 1rem 0 2.8rem; }
+    .features .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .feature {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.3rem 1.5rem;
+      background: #fff;
+    }
+    .feature.wide { grid-column: 1 / -1; }
+    .feature h2 {
+      font-size: 1.1rem;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+    .feature p {
+      font-size: 0.95rem;
+      color: var(--text-light);
+    }
+    @media (max-width: 600px) {
+      .features .grid { grid-template-columns: 1fr; }
+    }
+
     /* Links */
     .links { background: var(--orange-soft); padding: 2.8rem 0; }
     .links h2 { font-size: 1.25rem; color: var(--dark); margin-bottom: 1.2rem; }
@@ -165,7 +190,6 @@
     .about h2 { font-size: 1.25rem; color: var(--dark); margin-bottom: 0.8rem; }
     .about h2:not(:first-child) { margin-top: 2rem; }
     .citation {
-      max-width: 680px;
       margin: 0.4rem 0 0.8rem;
       padding: 1rem 1.2rem;
       background: var(--orange-soft);
@@ -175,7 +199,6 @@
       color: var(--text);
     }
     .about p {
-      max-width: 680px;
       font-size: 0.95rem;
       color: var(--text-light);
       margin-bottom: 0.8rem;
@@ -211,8 +234,9 @@
 <section class="intro">
   <div class="container">
     <h1>Annotate text corpora, train classifiers,<br>without writing code.</h1>
-    <p>ActiveTigger is an open-source web tool for collaborative text annotation, built for computational social sciences. Upload a corpus, define your categories, annotate — with the help of active learning, fine-tuned BERT classifiers, and generative AI if you want them.</p>
-    <p>It is developed by researchers at <a href="https://www.css.cnrs.fr/">CSS@IP-Paris</a> (CREST) and used daily for real research projects: stabilising codebooks, building training datasets, and classifying large corpora.</p>
+    <p>ActiveTigger is an open-source web tool for collaborative corpus annotation and classification. Built by and for computational social scientists, it handles text as well as images.</p>
+    <p>Upload a corpus, define your categories, annotate — and let active learning, fine-tuned encoder models, or generative AI do the heavy lifting when you want them.</p>
+    <p>It is constantly developed by researchers at <a href="https://www.css.cnrs.fr/">CSS@IP-Paris</a> (CREST) and used daily in ongoing research projects.</p>
     <p>We host an <a href="https://activetigger.com/activetigger/">online instance at CREST</a> — researchers can <a href="https://www.css.cnrs.fr/request-an-account-on-the-crest-instance/">request an account</a> to try it.</p>
     <div class="buttons">
       <a class="btn btn-primary" href="https://www.css.cnrs.fr/request-an-account-on-the-crest-instance/">Request an account</a>
@@ -231,31 +255,31 @@
 
           <figure class="slide">
             <h2>1. Explore your corpus</h2>
-            <figcaption>Get a first grasp of your data: browse the texts, search by keywords, visualise the corpus as a 2D projection or run topic models to see what it contains before deciding how to annotate it.</figcaption>
+            <figcaption>Get a first sense of your data: browse the texts, search by keywords, visualize the corpus as a 2D projection, or run topic models to see what it contains before deciding how to annotate it.</figcaption>
             <img src="img/explore.png" alt="ActiveTigger exploration view of a corpus, with search and visualisation tools">
           </figure>
 
           <figure class="slide">
             <h2>2. Write your codebook</h2>
-            <figcaption>Define your annotation schemes and write down the guidelines for each category, so they stay consistent across annotators and over time.</figcaption>
+            <figcaption>Define your annotation scheme and write down the guidelines for each category, so they stay consistent across annotators and over time.</figcaption>
             <img src="img/codebook.png" alt="ActiveTigger codebook view with annotation guidelines and label counts">
           </figure>
 
           <figure class="slide">
-            <h2>3. Annotate</h2>
-            <figcaption>Tag texts one by one, filter by content or by tag, and let active learning pick the next most informative example. Several annotators can work on the same project and compare their annotations.</figcaption>
+            <h2>3. Annotate together</h2>
+            <figcaption>Tag texts one by one, filter by content or by tag, and let active learning pick the next most informative example. Multiple annotators can work in parallel and compare results.</figcaption>
             <img src="img/annotation.png" alt="ActiveTigger annotation interface, with a text to tag and label buttons">
           </figure>
 
           <figure class="slide">
             <h2>4. Train &amp; predict</h2>
-            <figcaption>Fine-tune a BERT classifier on your annotations, check its performance, and apply it to the whole corpus to classify the texts you did not annotate by hand.</figcaption>
+            <figcaption>Fine-tune a BERT classifier on your annotations, evaluate its performance, and apply it to the whole corpus to classify everything you didn't annotate by hand.</figcaption>
             <img src="img/predict.png" alt="ActiveTigger prediction view, with a fine-tuned model applied to the corpus">
           </figure>
 
           <figure class="slide">
             <h2>5. Export everything</h2>
-            <figcaption>Download your annotations, predictions, fine-tuned models and a full project summary in standard formats, ready for analysis in Python or R — or for sharing with your team.</figcaption>
+            <figcaption>Download your annotations, predictions, fine-tuned models, and a full project summary in open formats, ready for analysis in Python or R — or for sharing with your colleagues.</figcaption>
             <img src="img/export.png" alt="ActiveTigger export view listing downloadable annotations, predictions and models">
           </figure>
 
@@ -336,13 +360,32 @@
 })();
 </script>
 
+<section class="features">
+  <div class="container">
+    <div class="grid">
+      <div class="feature wide">
+        <h2>Your corpus, your categories, your classifier</h2>
+        <p>With ActiveTigger, scholars across the world develop and stabilize codebooks, build training datasets, classify large corpora, and extract information. It is designed to facilitate iterative, reflexive coding. It has been tested on corpora of hundreds of thousands of documents.</p>
+      </div>
+      <div class="feature">
+        <h2>Your language</h2>
+        <p>Multilingual models are supported.</p>
+      </div>
+      <div class="feature">
+        <h2>Your privacy settings</h2>
+        <p>Because ActiveTigger is open source, you can run your own instance on your own infrastructure when working with sensitive data. No vendor, no data harvesting, no lock-in.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="links" id="access">
   <div class="container">
     <h2>Using ActiveTigger</h2>
     <ul>
       <li><strong>Try it</strong> — a test instance is hosted at CREST: <a href="https://activetigger.com/activetigger/">activetigger.com/activetigger</a>. Researchers can <a href="https://www.css.cnrs.fr/request-an-account-on-the-crest-instance/">request an account</a>.</li>
-      <li><strong>Read the docs</strong> — quickstart, workflows and concepts in the <a href="https://activetigger.com/documentation/">documentation</a>.</li>
       <li><strong>Install your own</strong> — the <a href="https://github.com/activetigger/activetigger">source code</a> (Python/React) ships with a Docker setup.</li>
+      <li><strong>Read the docs</strong> — quickstart, workflows and concepts in the <a href="https://activetigger.com/documentation/">documentation</a>.</li>
       <li><strong>Use it from Python</strong> — <a href="https://github.com/activetigger/at-cli-client">at-cli-client</a> wraps the API for scripts and notebooks.</li>
       <li><strong>Talk to us</strong> — questions on <a href="https://discord.gg/3uNnjw2k">Discord</a>, bugs and ideas in the <a href="https://github.com/activetigger/activetigger/issues">issue tracker</a>, or by mail at <a href="mailto:css@ensae.fr">css@ensae.fr</a>.</li>
     </ul>
@@ -352,8 +395,8 @@
 <section class="about" id="about">
   <div class="container">
     <h2>About</h2>
-    <p>ActiveTigger is developed in the CREST research unit (CNRS, Polytechnique, ENSAE) by the <a href="https://www.css.cnrs.fr/">CSS@IP-Paris</a> team, with the help of <a href="https://www.ouestware.com/">OuestWare</a>. It is a complete rewrite of the original <a href="https://gitlab.univ-lille.fr/julien.boelaert/activetigger">R Shiny app</a> by Julien Boelaert and Étienne Ollion. The name is a pun on the similarity between "Tagger" and "Tigger".</p>
-    <p>We aim to keep the application lightweight, frugal and open source, and to make computational social science methods accessible to communities beyond programmers. The project is funded by DRARI Île-de-France, Progedo and CREST.</p>
+    <p>ActiveTigger is developed at the CREST research unit (CNRS, Évole Polytechnique, ENSAE) by the <a href="https://www.css.cnrs.fr/">CSS@IP-Paris</a> team, with the support of <a href="https://www.ouestware.com/">OuestWare</a>. It is a complete rewrite of the original <a href="https://gitlab.univ-lille.fr/julien.boelaert/activetigger">R Shiny app</a> by Julien Boelaert and Étienne Ollion. The name is a pun on the similarity between "Tagger" and "Tiger".</p>
+    <p>We aim to keep the application lightweight, resource-efficient and open source, and to make computational social science methods accessible to communities beyond programmers. The project was supported by DRARI Île-de-France, Progedo, CREST.</p>
     <h2 id="cite">Citing ActiveTigger</h2>
     <p>If you use ActiveTigger in your research, please cite the companion article (available in the <a href="https://jadt2026.unipa.it/proceedings/">JADT 2026 proceedings</a>):</p>
     <blockquote class="citation">Schultz, E., Boelaert, J., Morin, A., Bonutti D'Agostini, E., Claesson, A., Chatelain, A., &amp; Ollion, É. (2026). ActiveTigger: An open source collaborative text annotation software for computational social sciences. In <em>Proceedings of the 18th International Conference on Statistical Analysis of Textual Data (<a href="https://jadt2026.unipa.it/">JADT 2026</a>)</em>, Palermo, Italy, July 8–10, 2026.</blockquote>
